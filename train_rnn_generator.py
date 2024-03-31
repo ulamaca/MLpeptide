@@ -9,7 +9,7 @@ pandarallel.initialize(progress_bar=False)
 from sklearn.metrics import roc_auc_score, roc_curve, accuracy_score, matthews_corrcoef, f1_score, precision_score, recall_score
 import numpy as np
 import torch.optim as optim
-folder = "/data/AIpep-clean/"
+folder = "data/AIpep-clean/"
 import matplotlib.pyplot as plt
 from vocabulary import Vocabulary
 from datasetbioactivity import Dataset
@@ -68,6 +68,10 @@ if __name__ == "__main__":
         device = "cuda" 
     else:
         device = "cpu" 
+    
+    device = "cpu"
+    print("warnning: We force ourselves to use CPU first")
+    breakpoint()
     
     if not os.path.exists(folder+"pickles/generator_training_results.pkl"):
         df_training_active = df_training.query("activity == 1")
