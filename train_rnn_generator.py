@@ -68,10 +68,7 @@ if __name__ == "__main__":
         device = "cuda" 
     else:
         device = "cpu" 
-    
-    device = "cpu"
-    print("warnning: We force ourselves to use CPU first")
-    breakpoint()
+        
     
     if not os.path.exists(folder+"pickles/generator_training_results.pkl"):
         df_training_active = df_training.query("activity == 1")
