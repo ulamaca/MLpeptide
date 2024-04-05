@@ -161,7 +161,10 @@ class GeneratorRNN(nn.Module):
         output = self.embedding(sequences)
 
         #we pack the output together to minimize the compute with th rnn
-        output = torch.nn.utils.rnn.pack_padded_sequence(output, lengths, batch_first=True, enforce_sorted=False)
+        #output = torch.nn.utils.rnn.pack_padded_sequence(output, lengths, batch_first=True, enforce_sorted=False)
+        # for version older than 1.5, needs to move lengths back to 'CPU'
+        # please refer to https://github.com/pytorch/pytorch/issues/47637
+        output = torch.nn.utils.rnn.pack_padded_sequence(output, lengths.to('cpu'), batch_first=True, enforce_sorted=False)
         
         all_outputs, hidden = self.rnn(output, hidden)
         
@@ -246,7 +249,7 @@ class Generator:
     def likelihood(self, sequences, lengths):
         # return the NLL for a sequence, while training we want to minize this
         # sequences is a tensor of shape (batch_size, max_legths), it includes sequences with paddings
-        # lengths is the length of each sequence in shape (batch_size)
+        # lengths is the length of each sequence in shape (batch_size)        
         output, _ = self.model(sequences, lengths)
         tensor_expected = torch.zeros_like(sequences)
         tensor_expected[:, :-1] = sequences[:, 1:]
