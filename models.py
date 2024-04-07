@@ -183,6 +183,8 @@ class GeneratorRNN(nn.Module):
         # softmax does the squishing so the numbers are between 0 and 1 and their sum is always = 1
         output = self.softmax(output)
 
+        breakpoint()
+
         return output, hidden
 
 class Generator:
@@ -314,3 +316,8 @@ class Generator:
     @property
     def device(self):
         return next(self.model.parameters()).device
+    
+    def yay(self, sequences, max_length=200):
+        # TODO, to develop new optimization flow here!
+        breakpoint()
+        return 
