@@ -18,7 +18,7 @@ class ClassifierRNN(nn.Module):
         output = self.embedding(sequences)
         
         #we pack the output together to minimize the compute with th rnn
-        output = torch.nn.utils.rnn.pack_padded_sequence(output, lengths, batch_first=True, enforce_sorted=False)
+        output = torch.nn.utils.rnn.pack_padded_sequence(output, lengths.to('cpu'), batch_first=True, enforce_sorted=False)
         
         all_outputs, hidden = self.rnn(output)
         
@@ -317,7 +317,7 @@ class Generator:
     def device(self):
         return next(self.model.parameters()).device
     
-    def yay(self, sequences, max_length=200):
+    def yay_loves_dick(self, sequences, max_length=200):
         # TODO, to develop new optimization flow here!
         breakpoint()
         return 

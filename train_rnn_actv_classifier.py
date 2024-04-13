@@ -48,8 +48,7 @@ def training(model, test_dataloader, training_dataloader, n_epoch, optimizer, fi
     for e in range(1, n_epoch + 1):
         for i_batch, sample_batched in enumerate(training_dataloader):
             seq_batched = sample_batched[0][0].to(model.device, non_blocking=True)
-            #seq_lengths = sample_batched[0][1].to(model.device, non_blocking=True)
-            seq_lengths = sample_batched[0][1].to('cpu', non_blocking=True)
+            seq_lengths = sample_batched[0][1].to(model.device, non_blocking=True)
             cat_batched = sample_batched[1].to(model.device, non_blocking=True)
 
             output = model.evaluate(seq_batched, seq_lengths)
